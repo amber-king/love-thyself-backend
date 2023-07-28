@@ -6,8 +6,22 @@ const cors = require("cors");
 // Configuration
 const app = express();
 
+// added cors config requirements to prevent requests going to a different domain
+// the home page and the topic page connected to the topic buttons are the two main domains the request muct got
+const acceptOrigin = ["http://localhost:3000", "http://localhost:3000/topic"];
+
+const corsCheck = {
+  origin: function (origin, callback) {
+    if (acceptOrigin.includes(origin) || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+};
+
 // Middleware
-app.use(cors());
+app.use(cors(corsCheck));
 app.use(express.json());
 
 // Routes --v
@@ -23,7 +37,7 @@ app.get("/", (req, res) => {
 // seems to be a time limit on API called - could cause not all related data to be returned but majority works
 app.get("/api/quotes/:topic", async (req, res) => {
   // console.log('Test to fetch quotes.'); // testing to see if the api is fectched
-  
+
   // sets for which topics to pull from API
   const { topic } = req.params;
   const topics = ["today", "truth", "inspiration", "happiness", "confidence"];
@@ -34,7 +48,7 @@ app.get("/api/quotes/:topic", async (req, res) => {
   }
 
   // try - catch = to retrieve the quotes in the proper format as requested via topic
-  // IF no quotes for selected topic then return error - no matching quote found 
+  // IF no quotes for selected topic then return error - no matching quote found
   // w/ a catch error msg - fail to catch quotes˝
   try {
     const response = await axios.get("https://zenquotes.io/api/quotes");
