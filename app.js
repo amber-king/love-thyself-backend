@@ -8,64 +8,111 @@ const app = express();
 
 // added cors config requirements to prevent requests going to a different domain
 // the home page and the topic page connected to the topic buttons are the two main domains the request muct got
-const acceptOrigin = ["http://localhost:3000", "http://localhost:3000/topic"];
+// const acceptOrigin = ["http://localhost:3000"];
 
-const corsCheck = {
-  origin: function (origin, callback) {
-    if (acceptOrigin.includes(origin) || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-};
+// const corsCheck = {
+//   origin: function (origin, callback) {
+//     if (acceptOrigin.includes(origin) || !origin) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error("Not allowed by CORS"));
+//     }
+//   },
+// };
 
 // Middleware
-app.use(cors(corsCheck));
+app.use(cors());
 app.use(express.json());
 
 // Routes --v
 
-// home page --v
-app.get("/", (req, res) => {
-  res.send("Welcome to Love-Thyself❤️");
+// today quotes --v
+app.get("/api/quotes/today", async (req, res) => {
+  try {
+    const response = await axios.get("https://zenquotes.io/api/random");
+    const todaysQuote = response.data[0].q;
+    res.json({ quote: todaysQuote });
+  } catch (error) {
+    console.error("Error fetching today's quote:", error);
+    res.status(500).json({ error: "Failed to fetch today's quote" });
+  }
 });
 
-// fetches/gets quotes filtered by the stated topics
-// topics = today, truth, inspiration, happiness, confidence
-// IF topic not found an error message is thrown
-// seems to be a time limit on API called - could cause not all related data to be returned but majority works
-app.get("/api/quotes/:topic", async (req, res) => {
-  // console.log('Test to fetch quotes.'); // testing to see if the api is fectched
-
-  // sets for which topics to pull from API
-  const { topic } = req.params;
-  const topics = ["today", "truth", "inspiration", "happiness", "confidence"];
-
-  // if no matching topic - return 400; invaild topic msg
-  if (!topics.includes(topic)) {
-    return res.status(400).json({ message: "Invalid topic." });
-  }
-
-  // try - catch = to retrieve the quotes in the proper format as requested via topic
-  // IF no quotes for selected topic then return error - no matching quote found
-  // w/ a catch error msg - fail to catch quotes˝
+// truth quotes --v
+app.get("/api/quotes/truth", async (req, res) => {
   try {
-    const response = await axios.get("https://zenquotes.io/api/quotes");
-    const filteredQuotes = response.data.filter((quote) =>
-      quote.q.toLowerCase().includes(topic.toLowerCase())
+    const response = await axios.get("https://zenquotes.io/api/random");
+    const truthQuotes = response.data.filter((truth) =>
+      quote.q.toLowerCase().includes("truth")
     );
-
-    if (filteredQuotes.length > 0) {
-      return res.json({ quotes: filteredQuotes });
+    if (truthQuotes.length > 0) {
+      return res.json({ quotes: truthQuotes });
     } else {
-      return res
-        .status(404)
-        .json({ message: "No quotes found for the specified topic." });
+      return res.status(404).json({ message: "No truth quotes found" });
     }
   } catch (error) {
-    console.error("Error fetching quotes:", error);
-    return res.status(500).json({ message: "Failed to fetch quotes." });
+    console.error("Error fetching truth quotes:", error);
+    return res.status(500).json({ message: "Failed to fetch truth quotes." });
+  }
+});
+
+// happiness quotes --v
+app.get("/api/quotes/happiness", async (req, res) => {
+  try {
+    const response = await axios.get("https://zenquotes.io/api/random");
+    const happinessQuotes = response.data.filter((happiness) =>
+      happiness.q.toLowerCase().includes("happiness")
+    );
+    if (happinessQuotes.length > 0) {
+      return res.json({ quotes: happinessQuotes });
+    } else {
+      return res.status(404).json({ message: "No happiness quotes found" });
+    }
+  } catch (error) {
+    console.error("Error fetching happiness quotes:", error);
+    return res
+      .status(500)
+      .json({ message: "Failed to fetch happiness quotes." });
+  }
+});
+
+// confidence quotes
+app.get("/api/quotes/confidence", async (req, res) => {
+  try {
+    const response = await axios.get("https://zenquotes.io/api/random");
+    const confidenceQuotes = response.data.filter((confidence) =>
+      confidence.q.toLowerCase().includes("confidence")
+    );
+    if (confidenceQuotes.length > 0) {
+      return res.json({ quotes: confidenceQuotes });
+    } else {
+      return res.status(404).json({ message: "No confidence quotes found" });
+    }
+  } catch (error) {
+    console.error("Error fetching confidence quotes:", error);
+    return res
+      .status(500)
+      .json({ message: "Failed to fetch confidence quotes." });
+  }
+});
+
+// inspiration  quotes
+app.get("/api/quotes/inspiration", async (req, res) => {
+  try {
+    const response = await axios.get("https://zenquotes.io/api/random");
+    const inspirationQuotes = response.data.filter((inspiration) =>
+      inspiration.q.toLowerCase().includes("inspiration")
+    );
+    if (inspirationQuotes.length > 0) {
+      return res.json({ quotes: inspirationQuotes });
+    } else {
+      return res.status(404).json({ message: "No inspiration quotes found" });
+    }
+  } catch (error) {
+    console.error("Error fetching inspiration quotes:", error);
+    return res
+      .status(500)
+      .json({ message: "Failed to fetch inspiration quotes." });
   }
 });
 
