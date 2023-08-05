@@ -32,26 +32,6 @@ app.get("/api/tags", async (req, res) => {
   }
 });
 
-// // Endpoint to fetch quotes by a specific tag
-// app.get("/api/search/quotes", async (req, res) => {
-//     try {
-//       const { tag } = req.query;
-  
-//       if (!tag) {
-//         return res.status(400).json({ error: "Tag parameter is required" });
-//       }
-  
-//       const response = await axios.get(`${API_BASE_URL}/search/quotes?tag=${tag}`);
-//       const data = response.data;
-//       const quotes = data.results;
-//       res.json({ quotes });
-//     } catch (error) {
-//       console.error("Error fetching quotes by tag:", error);
-//       res.status(500).json({ error: "Failed to fetch quotes by tag" });
-//     }
-//   });
-  
-
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server started on port ${PORT}`);
