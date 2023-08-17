@@ -52,7 +52,7 @@ app.get("/api/authors", async (req, res) => {
   }
 });
 
-// Endpoint to fetch quotes by author
+// Endpoint to fetch quotes by author - http://localhost:5000/api/quotes/by-author/:authorSlugOrId
 app.get("/api/quotes/by-author/:authorSlugOrId", async (req, res) => {
     const authorSlugOrId = req.params.authorSlugOrId;
     
