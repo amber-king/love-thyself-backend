@@ -22,8 +22,6 @@ app.get("/api/quotes", async (req, res) => {
 });
 
 // Endpoint to search through all quotes via keyword input - http://localhost:5000/api/search/quotes?query=<your-search-query>
-
-
 app.get("/api/search/quotes", async (req, res) => {
     const searchQuery = req.query.query;
   
@@ -66,7 +64,6 @@ app.get("/api/quotes/by-author/:authorSlugOrId", async (req, res) => {
       res.status(500).json({ error: "Failed to fetch quotes by author" });
     }
   });
-
 
 
 const PORT = process.env.PORT || 5000;
