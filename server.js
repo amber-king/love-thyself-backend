@@ -6,12 +6,12 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+const API_BASE_URL = "https://api.quotable.io";
+
 // home page route
 app.get("/", (req, res) => {
   res.json("Welcome to  Love-Thyself ❤️");
 });
-
-const API_BASE_URL = "https://api.quotable.io";
 
 // Endpoint to fetch all quotes from the external API - http://localhost:5000/api/quotes
 app.get("/api/quotes", async (req, res) => {
