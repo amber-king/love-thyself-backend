@@ -9,9 +9,9 @@ app.use(cors());
 
 app.use(express.json());
 
-// const API_BASE_URL = "https://api.quotable.io";
+ const API_BASE_URL = "https://api.quotable.io";
 
-const API_BASE_URL = process.env.API_BASE_URL;
+//const API_BASE_URL = process.env.API_BASE_URL;
 
 // Routes
 // home page route
