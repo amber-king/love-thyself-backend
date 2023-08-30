@@ -1,4 +1,6 @@
 const express = require("express");
+const axios = require("axios");
+
 const cors = require("cors");
 
 const app = express();
@@ -7,6 +9,7 @@ app.use(cors());
 
 app.use(express.json());
 
+const API_BASE_URL = "https://api.quotable.io";
 // Routes
 // home page route
 app.get("/", (req, res) => {
