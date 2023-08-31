@@ -4,9 +4,14 @@
 
 ## Frontend Links ⤵️
 
-### Front-end Github Repo Link → https://github.com/amber-king/love-thyself-frontend
+- [Front-end Github Repo](https://github.com/amber-king/love-thyself-frontend)
 
-### Netlify Frontend Link → https://main--love-thyself.netlify.app/
+- [Netlify Frontend](https://main--love-thyself.netlify.app/)
+
+- Heroku Backend Links: <br>
+  [All Quotes W/ Search Engine](https://love-thyself-backend-85d7b3d064df.herokuapp.com/api/quotes) <br>
+  [All Authors - Pick a Author Card ](https://love-thyself-backend-85d7b3d064df.herokuapp.com/api/authors) <br>
+  [Selected Author from All Authors Page](https://love-thyself-backend-85d7b3d064df.herokuapp.com/api/quotes/by-author/${authorSlug})<i>(replace the authorSlug with the correct author name)</i>
 
 <hr>
 
